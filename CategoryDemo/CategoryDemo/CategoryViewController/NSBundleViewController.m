@@ -11,6 +11,7 @@
 
 @interface NSBundleViewController ()
 
+@property (nonatomic, strong) UILabel *bundleIDLabel;
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *versionLabel;
 @property (nonatomic, strong) UILabel *buildVersionLabel;
@@ -24,6 +25,7 @@
     
     [self setupUI];
     
+    self.bundleIDLabel.text = [NSString stringWithFormat:@"App BundleID：%@", NSBundle.appBundleIdentifier];
     self.nameLabel.text = [NSString stringWithFormat:@"App名称：%@", NSBundle.appName];
     self.versionLabel.text = [NSString stringWithFormat:@"App版本号：%@", NSBundle.appVersion];
     self.buildVersionLabel.text = [NSString stringWithFormat:@"App Build版本号：%@", NSBundle.appBuildVersion];
@@ -37,6 +39,11 @@
     CGFloat w = UIScreen.mainScreen.bounds.size.width - (2 * x);
     CGFloat h = 28;
     
+    self.bundleIDLabel = [[UILabel alloc] initWithFrame:CGRectMake(x, y, w, h)];
+    self.bundleIDLabel.adjustsFontSizeToFitWidth = YES;
+    self.bundleIDLabel.minimumScaleFactor = 0.6;
+    
+    y += (h + 10);
     self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(x, y, w, h)];
     
     y += (h + 10);
@@ -45,6 +52,8 @@
     y += (h + 10);
     self.buildVersionLabel = [[UILabel alloc] initWithFrame:CGRectMake(x, y, w, h)];
     
+    
+    [self.view addSubview:self.bundleIDLabel];
     [self.view addSubview:self.nameLabel];
     [self.view addSubview:self.versionLabel];
     [self.view addSubview:self.buildVersionLabel];

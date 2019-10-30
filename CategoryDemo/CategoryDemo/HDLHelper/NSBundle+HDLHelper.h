@@ -12,6 +12,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSBundle (HDLHelper)
 
+@end
+
+
+// MARK: - App信息
+
+@interface NSBundle (AppInfo)
+
+/**
+ App Bundle Identifier
+
+ @return Bundle Identifier
+ */
++ (NSString *)appBundleIdentifier;
+
 /**
  App名称
  

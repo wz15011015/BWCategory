@@ -10,6 +10,22 @@
 
 @implementation NSBundle (HDLHelper)
 
+@end
+
+
+// MARK: - App信息
+
+@implementation NSBundle (AppInfo)
+
+/**
+ App Bundle Identifier
+
+ @return Bundle Identifier
+ */
++ (NSString *)appBundleIdentifier {
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
+}
+
 /**
  App名称
 

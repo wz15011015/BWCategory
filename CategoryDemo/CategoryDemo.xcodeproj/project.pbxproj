@@ -169,6 +169,7 @@
 				06575A2322D2E48000CBB997 /* Sources */,
 				06575A2422D2E48000CBB997 /* Frameworks */,
 				06575A2522D2E48000CBB997 /* Resources */,
+				067E1E1F2369205B00B85EF7 /* Build Version Auto-Increment */,
 			);
 			buildRules = (
 			);
@@ -223,6 +224,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		067E1E1F2369205B00B85EF7 /* Build Version Auto-Increment */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Version Auto-Increment";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\n#\n# Copyright © 2019 wangzhi, BTStudio. All rights reserved.\n#\n# V1.0.0\n#\n# 2019.10.30\n#\n#\n#\n######################################################\n#              每次编译或打包后是否Build加1\n######################################################\n#\n#\n#\n# Shell基本语法:\n# \n# 1. 定义变量时，变量名不加美元符号$(PHP语言中变量需要)，如：\n#    your_name=\"BTStudio\" (注意：变量名和等号之间不能有空格)\n# \n# 2. 使用一个定义过的变量，只要在变量名前面加美元符号即可，如：\n#    echo $your_name\n#\n# 3. 读取plist中某个字段的值，并赋给变量var：\n#    var=$(/usr/libexec/PlistBuddy -c \"Print :字段名\" plist文件路径)\n#\n# # PlistBuddy是Mac自带的专门解析plist的小工具，由于PlistBuddy并不在Mac默认的Path里，\n# # 所以我们得通过绝对路径(/usr/libexec/PlistBuddy)来引用这个工具。\n#\n# 4. 修改plist中某个字段相应的值:\n#    /usr/libexec/PlistBuddy -c \"Set :字段名 值\" plist文件路径\n#\n# 5. Shell的echo指令与PHP的echo指令类似，都是用于字符串的输出。命令格式：\n#    echo string\n#\n# 6. Shell脚本中没有{}来标记语句块，所以用fi表示if语句块的结束。\n# \n# 7. #! 是一个约定的标记，它告诉系统这个脚本需要用什么解释器来执行，即使用哪一种Shell。\n#\n\n\n# 每次编译后是否Build加1: 0-每次打包后Build加1  1-每次编译后Build加1  \nBUILD_INCREASE_SYMBOL=0\n\n# 编译或打包的标志,默认为编译\nBUILD_CONFIGURATION_FLAG=\"Debug\"\n\n\nif [ $BUILD_INCREASE_SYMBOL -eq 0 ]; then\n    BUILD_CONFIGURATION_FLAG=\"Release\"\nfi\n\necho \"Xcode当前的 Build Configuration : $CONFIGURATION\"\n\nif [ $BUILD_CONFIGURATION_FLAG == \"${CONFIGURATION}\" ]; then\n    BuildNumber=$(/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"${INFOPLIST_FILE}\")\n\n    # 判断读取出来的 BuildNumber 变量是否为 $(CURRENT_PROJECT_VERSION) :\n    # 若是, 则从 CURRENT_PROJECT_VERSION 读取build版本号,然后+1;\n    # 若不是, 则读取出来的 BuildNumber 变量即为build版本号,直接+1;\n    if [ $BuildNumber == '$(CURRENT_PROJECT_VERSION)' ]; then\n        BuildNumber=${CURRENT_PROJECT_VERSION}\n    fi\n\n    BuildNumber=$(($BuildNumber + 1))\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BuildNumber\" \"${INFOPLIST_FILE}\"\n    \n    echo \"Build number need to be increased.\"\nelse\n    echo \"Build number do not need to be increased.\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		06575A2322D2E48000CBB997 /* Sources */ = {
@@ -395,7 +417,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hadlinks.CategoryDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.BTStudio.CategoryDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -413,7 +435,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hadlinks.CategoryDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.BTStudio.CategoryDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
