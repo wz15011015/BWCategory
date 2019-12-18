@@ -8,7 +8,7 @@
 
 #import "NSArray+HDLHelper.h"
 
-// 是否开启Log, 0:关闭  1:开启
+// 是否开启Log: 0-关闭  1-开启
 #define HDL_NSARRAY_LOG_ENABLE 1
 
 
