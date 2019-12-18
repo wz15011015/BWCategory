@@ -74,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)documentDirectory;
 
 /**
- * 以用户名+UUID命名
+ * 以 用户名 + UUID 命名
  * 说明：可用于命名图片名称
  */
 + (NSString *)imageNameUseBundleIDWithUsername:(NSString *)username;

@@ -36,9 +36,9 @@
     }
     
     /**
-          * PHAsset: 一个PHAsset对象代表一个资源文件,比如一张图片
-          * PHAssetCollection: 一个PHAssetCollection对象代表一个相册
-          */
+     * PHAsset: 一个PHAsset对象代表一个资源文件,比如一张图片
+     * PHAssetCollection: 一个PHAssetCollection对象代表一个相册
+     */
     
     // 1. 获取已存在的相册列表,然后判断相册是否已存在
     __block PHAssetCollection *tempCollection = nil;
@@ -643,7 +643,7 @@
     CIImage *inputImage = [CIImage imageWithCGImage:self.CGImage];
     
     // 设置filter
-    blur = blur < 0.f ? 0 : (blur > 1.f ? 10 : blur * 10); // blur范围从 0.0 - 1.0
+    blur = blur < 0.f ? 0 : (blur > 1.f ? 10 : blur * 10); // blur范围: 0.0 ~ 1.0
     CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
     [filter setValue:inputImage forKey:kCIInputImageKey];
     [filter setValue:@(blur) forKey:kCIInputRadiusKey];
@@ -678,11 +678,11 @@
     box_size = box_size - (box_size % 2) + 1;
     
     /**
-          * 位图：由一个个像素点组成的图像
-          * 图片像素点个数：图片宽高的乘积
-          * 一个像素点的大小：4个字节（存放RGBA值，每一分量占1个字节）
-          * 图片大小：像素点个数乘以4个字节，即: size = w * h * 4
-          */
+     * 位图：由一个个像素点组成的图像
+     * 图片像素点个数：图片宽高的乘积
+     * 一个像素点的大小：4个字节（存放RGBA值，每一分量占1个字节）
+     * 图片大小：像素点个数乘以4个字节，即: size = w * h * 4
+     */
     
     CGImageRef img = self.CGImage;
     vImage_Buffer inBuffer, outBuffer;
@@ -718,14 +718,14 @@
     CGColorSpaceRef color_space = CGColorSpaceCreateDeviceRGB();
     
     /**
-          * 创建绘制当前图片的上下文
-          *
-          * data - 所需要的内存空间,传nil时会自动分配
-          * width / height - 当前画布的宽/高
-          * bitsPerComponent - 每个颜色分量的大小,RGBA每一个分量占1个字节
-          * bytesPerRow - 每一行使用的字节数 (4 * width)
-          * bitmapInfo - RGBA绘制的顺序
-          */
+     * 创建绘制当前图片的上下文
+     *
+     * data - 所需要的内存空间,传nil时会自动分配
+     * width / height - 当前画布的宽/高
+     * bitsPerComponent - 每个颜色分量的大小, RGBA每一个分量占1个字节
+     * bytesPerRow - 每一行使用的字节数 (4 * width)
+     * bitmapInfo - RGBA绘制的顺序
+     */
     CGContextRef ctx = CGBitmapContextCreate(outBuffer.data, outBuffer.width, outBuffer.height, 8, outBuffer.rowBytes, color_space, kCGImageAlphaNoneSkipLast);
     CGImageRef imageRef = CGBitmapContextCreateImage(ctx);
     UIImage *returnImage = [UIImage imageWithCGImage:imageRef];

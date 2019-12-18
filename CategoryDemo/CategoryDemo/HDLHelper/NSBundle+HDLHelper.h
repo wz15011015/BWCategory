@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)appVersion;
 
 /**
- App Build版本号
+ App Build版本号 / 构建版本号
  
  @return 版本号
  */
