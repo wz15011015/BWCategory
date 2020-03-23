@@ -26,6 +26,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSString (Encryptor)
 
+/// 对字符串进行Base64编码
+- (NSString *)base64Encode;
+
+/// 对Base64编码字符串进行解码
+- (NSString *)base64Decode;
+
 /**
  * SHA1摘要算法
  
@@ -53,6 +59,24 @@ NS_ASSUME_NONNULL_BEGIN
  * @return 十六进制形式的摘要字符串(大写)
  */
 - (NSString *)MD5;
+
+/// 加密
+/// @param key 密钥
+/// @param enable 加密前是否对字符串进行Base64编码
+- (NSString *)AES256EncryptWithKey:(NSString *)key enableBase64Encode:(BOOL)enable;
+
+/// 解密
+/// @param key 密钥
+/// @param enable 解密完成后是否对结果进行Base64解码
+- (NSString *)AES256DecryptWithKey:(NSString *)key enableBase64Encode:(BOOL)enable;
+
+/// 加密
+/// @param key 密钥
+- (NSString *)AES256EncryptWithKey:(NSString *)key;
+
+/// 解密
+/// @param key 密钥
+- (NSString *)AES256DecryptWithKey:(NSString *)key;
 
 @end
 

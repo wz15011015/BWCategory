@@ -27,6 +27,8 @@
 		06868D7A22D31CF2009D6BE5 /* NSBundle+HDLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 06868D7722D31CF2009D6BE5 /* NSBundle+HDLHelper.m */; };
 		06868D7D22D31E00009D6BE5 /* NSBundleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06868D7C22D31E00009D6BE5 /* NSBundleViewController.m */; };
 		06868D8022D31FDF009D6BE5 /* NSString+HDLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 06868D7F22D31FDF009D6BE5 /* NSString+HDLHelper.m */; };
+		BCA448F92428FA3E009B8734 /* NSData+HDLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA448F72428FA3E009B8734 /* NSData+HDLHelper.m */; };
+		BCA448FC2428FAE4009B8734 /* NSDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA448FB2428FAE4009B8734 /* NSDataViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +71,10 @@
 		06868D7E22D31FDF009D6BE5 /* NSString+HDLHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+HDLHelper.h"; sourceTree = "<group>"; };
 		06868D7F22D31FDF009D6BE5 /* NSString+HDLHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+HDLHelper.m"; sourceTree = "<group>"; };
 		06868D8122D32479009D6BE5 /* HDLHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HDLHelper.h; sourceTree = "<group>"; };
+		BCA448F72428FA3E009B8734 /* NSData+HDLHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+HDLHelper.m"; sourceTree = "<group>"; };
+		BCA448F82428FA3E009B8734 /* NSData+HDLHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+HDLHelper.h"; sourceTree = "<group>"; };
+		BCA448FA2428FAE4009B8734 /* NSDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataViewController.h; sourceTree = "<group>"; };
+		BCA448FB2428FAE4009B8734 /* NSDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +139,8 @@
 				061A015422D45C6A00F77542 /* UIAlertControllerViewController.m */,
 				06813E3722DC156700CB3EEB /* NSArrayViewController.h */,
 				06813E3822DC156700CB3EEB /* NSArrayViewController.m */,
+				BCA448FA2428FAE4009B8734 /* NSDataViewController.h */,
+				BCA448FB2428FAE4009B8734 /* NSDataViewController.m */,
 			);
 			path = CategoryViewController;
 			sourceTree = "<group>";
@@ -145,6 +153,8 @@
 				06868D7622D31CF2009D6BE5 /* UIDevice+HDLHelper.m */,
 				06868D7522D31CF2009D6BE5 /* NSBundle+HDLHelper.h */,
 				06868D7722D31CF2009D6BE5 /* NSBundle+HDLHelper.m */,
+				BCA448F82428FA3E009B8734 /* NSData+HDLHelper.h */,
+				BCA448F72428FA3E009B8734 /* NSData+HDLHelper.m */,
 				06868D7E22D31FDF009D6BE5 /* NSString+HDLHelper.h */,
 				06868D7F22D31FDF009D6BE5 /* NSString+HDLHelper.m */,
 				061A014A22D42B4F00F77542 /* UIImage+HDLHelper.h */,
@@ -254,12 +264,14 @@
 				061A014922D41A0900F77542 /* NSStringViewController.m in Sources */,
 				06813E3622DC0EAF00CB3EEB /* NSArray+HDLHelper.m in Sources */,
 				06575A2F22D2E48000CBB997 /* ViewController.m in Sources */,
+				BCA448FC2428FAE4009B8734 /* NSDataViewController.m in Sources */,
 				063A6F4A22D57B800048CD9E /* UIColorViewController.m in Sources */,
 				06448E9722D6C694000D8680 /* UIImageViewController.m in Sources */,
 				066B1CF122D3183000505311 /* UIDeviceViewController.m in Sources */,
 				061A014C22D42B4F00F77542 /* UIImage+HDLHelper.m in Sources */,
 				061A014F22D42D7A00F77542 /* UIColor+HDLHelper.m in Sources */,
 				061A015522D45C6A00F77542 /* UIAlertControllerViewController.m in Sources */,
+				BCA448F92428FA3E009B8734 /* NSData+HDLHelper.m in Sources */,
 				06868D8022D31FDF009D6BE5 /* NSString+HDLHelper.m in Sources */,
 				06868D7D22D31E00009D6BE5 /* NSBundleViewController.m in Sources */,
 				06575A3A22D2E48200CBB997 /* main.m in Sources */,
@@ -417,6 +429,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.BTStudio.CategoryDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -435,6 +448,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.BTStudio.CategoryDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;

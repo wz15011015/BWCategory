@@ -33,34 +33,31 @@ NSString *const CellID = @"ListCellIdentifier";
 #pragma mark - Data
 
 - (void)loadData {
-    self.categories = @[@{@"name" : @"UIDevice+HDLHelper",
-                          @"className" : @"UIDeviceViewController"
-                          },
-                        
-                        @{@"name" : @"NSBundle+HDLHelper",
-                          @"className" : @"NSBundleViewController"
-                          },
-                        
-                        @{@"name" : @"NSString+HDLHelper",
-                          @"className" : @"NSStringViewController"
-                          },
-                        
-                        @{@"name" : @"UIImage+HDLHelper",
-                          @"className" : @"UIImageViewController"
-                          },
-                        
-                        @{@"name" : @"UIColor+HDLHelper",
-                          @"className" : @"UIColorViewController"
-                          },
-                        
-                        @{@"name" : @"UIAlertController+HDLHelper",
-                          @"className" : @"UIAlertControllerViewController"
-                          },
-                        
-                        @{@"name" : @"NSArray+HDLHelper",
-                          @"className" : @"NSArrayViewController"
-                          }
-                        ];
+    self.categories = @[
+        @{@"name" : @"UIDevice+HDLHelper",
+          @"className" : @"UIDeviceViewController"},
+                            
+        @{@"name" : @"NSBundle+HDLHelper",
+          @"className" : @"NSBundleViewController"},
+        
+        @{@"name" : @"NSString+HDLHelper",
+          @"className" : @"NSStringViewController"},
+        
+        @{@"name" : @"UIImage+HDLHelper",
+          @"className" : @"UIImageViewController"},
+        
+        @{@"name" : @"UIColor+HDLHelper",
+          @"className" : @"UIColorViewController"},
+        
+        @{@"name" : @"UIAlertController+HDLHelper",
+          @"className" : @"UIAlertControllerViewController"},
+        
+        @{@"name" : @"NSArray+HDLHelper",
+          @"className" : @"NSArrayViewController"},
+          
+        @{@"name" : @"NSData+HDLHelper",
+          @"className" : @"NSDataViewController"}
+    ];
     
     [self.tableView reloadData];
 }

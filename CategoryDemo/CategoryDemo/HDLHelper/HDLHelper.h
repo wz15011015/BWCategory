@@ -8,6 +8,7 @@
 
 #import "NSArray+HDLHelper.h"
 #import "NSBundle+HDLHelper.h"
+#import "NSData+HDLHelper.h"
 #import "NSString+HDLHelper.h"
 #import "UIAlertController+HDLHelper.h"
 #import "UIColor+HDLHelper.h"

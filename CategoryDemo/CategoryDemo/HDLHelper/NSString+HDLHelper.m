@@ -7,7 +7,9 @@
 //
 
 #import <CommonCrypto/CommonDigest.h>
+#import <CommonCrypto/CommonCryptor.h>
 #import "NSString+HDLHelper.h"
+#import "NSData+HDLHelper.h"
 
 /**
  * NSString拓展
@@ -31,6 +33,25 @@
         [result appendFormat:@"%02X", bytes[i]];
     }
     return [NSString stringWithString:result];
+}
+
+/// 对字符串进行Base64编码
+- (NSString *)base64Encode {
+    if (self.length == 0) {
+        return @"";
+    }
+    NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
+    return [data base64EncodedStringWithOptions:0];
+}
+
+/// 对Base64编码字符串进行解码
+- (NSString *)base64Decode {
+    if (self.length == 0) {
+        return @"";
+    }
+    NSData *data = [[NSData alloc] initWithBase64EncodedString:self options:0];
+    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    return string;
 }
 
 /**
@@ -79,6 +100,76 @@
     unsigned char bytes[CC_MD5_DIGEST_LENGTH];
     CC_MD5(cString, (unsigned int)strlen(cString), bytes);
     return [NSString stringFromBytes:bytes size:CC_MD5_DIGEST_LENGTH];
+}
+
+/// 加密
+/// @param key 密钥
+/// @param enable 加密前是否对字符串进行Base64编码
+- (NSString *)AES256EncryptWithKey:(NSString *)key enableBase64Encode:(BOOL)enable {
+    NSString *sourceStr = self;
+    if (enable) {
+        sourceStr = [self base64Encode];
+    }
+    // 1. 字符串转换为二进制数据
+    const char *cstr = [sourceStr cStringUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [NSData dataWithBytes:cstr length:sourceStr.length];
+    
+    // 2. 对二进制数据进行加密
+    NSData *result = [data AES256EncryptWithKey:key];
+    
+    // 3. 加密结果转换为二进制字符串
+    if (result && result.length > 0) {
+        Byte *datas = (Byte *)[result bytes];
+        NSMutableString *output = [NSMutableString stringWithCapacity:result.length * 2];
+        for(int i = 0; i < result.length; i++) {
+            [output appendFormat:@"%02x", datas[i]];
+        }
+        return output;
+    }
+    return nil;
+}
+
+/// 解密
+/// @param key 密钥
+/// @param enable 解密完成后是否对结果进行Base64解码
+- (NSString *)AES256DecryptWithKey:(NSString *)key enableBase64Encode:(BOOL)enable {
+    // 1. 二进制字符串转换为二进制数据
+    NSMutableData *data = [NSMutableData dataWithCapacity:self.length / 2];
+    unsigned char whole_byte;
+    char byte_chars[3] = {'\0', '\0', '\0'};
+    for (int i = 0; i < [self length] / 2; i++) {
+        byte_chars[0] = [self characterAtIndex:i * 2];
+        byte_chars[1] = [self characterAtIndex:i * 2 + 1];
+        whole_byte = strtol(byte_chars, NULL, 16);
+        [data appendBytes:&whole_byte length:1];
+    }
+    
+    // 2. 对二进制数据进行解密
+    NSData *result = [data AES256DecryptWithKey:key];
+    
+    // 3. 二进制数据转换为字符串
+    if (result && result.length > 0) {
+        NSString *resultStr = [[NSString alloc] initWithData:result encoding:NSUTF8StringEncoding];
+        if (enable) {
+            resultStr = [resultStr base64Decode];
+        }
+        return resultStr;
+    }
+    return nil;
+}
+
+/// 加密
+/// @param key 密钥
+- (NSString *)AES256EncryptWithKey:(NSString *)key {
+    // 针对对中文加密失败的情况,需要先将字符串转换为base64字符串,然后再进行加密
+    return [self AES256EncryptWithKey:key enableBase64Encode:YES];
+}
+
+/// 解密
+/// @param key 密钥
+- (NSString *)AES256DecryptWithKey:(NSString *)key {
+    // 针对对中文加密失败的情况,解密完成后需要对字符串进行base64解码操作
+    return [self AES256DecryptWithKey:key enableBase64Encode:YES];
 }
 
 @end
