@@ -70,238 +70,170 @@
 //    NSString *version = [NSString stringWithCString:systemInfo.version encoding:NSASCIIStringEncoding];
    
     NSString *deviceModel = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-    
-    // iOS设备型号总览: https://www.theiphonewiki.com/wiki/Models
-    // 1. iPhone 系列
-    if ([deviceModel isEqualToString:@"iPhone1,1"]) {
-        return @"iPhone";
+    if (!deviceModel) {
+        return nil;
     }
-    if ([deviceModel isEqualToString:@"iPhone1,2"]) {
-        return @"iPhone 3G";
+        
+    // Apple设备型号总览: https://www.theiphonewiki.com/wiki/Models
+    NSDictionary *dic = @{
+        // 1. iPhone 系列
+        @"iPhone1,1" : @"iPhone 1G",
+        @"iPhone1,2" : @"iPhone 3G",
+        @"iPhone2,1" : @"iPhone 3GS",
+        @"iPhone3,1" : @"iPhone 4 (GSM)",
+        @"iPhone3,2" : @"iPhone 4",
+        @"iPhone3,3" : @"iPhone 4 (CDMA)",
+        @"iPhone4,1" : @"iPhone 4S",
+        @"iPhone5,1" : @"iPhone 5",
+        @"iPhone5,2" : @"iPhone 5",
+        @"iPhone5,3" : @"iPhone 5c",
+        @"iPhone5,4" : @"iPhone 5c",
+        @"iPhone6,1" : @"iPhone 5s",
+        @"iPhone6,2" : @"iPhone 5s",
+        @"iPhone7,1" : @"iPhone 6 Plus",
+        @"iPhone7,2" : @"iPhone 6",
+        @"iPhone8,1" : @"iPhone 6s",
+        @"iPhone8,2" : @"iPhone 6s Plus",
+        @"iPhone8,4" : @"iPhone SE",
+        @"iPhone9,1" : @"iPhone 7",
+        @"iPhone9,2" : @"iPhone 7 Plus",
+        @"iPhone9,3" : @"iPhone 7",
+        @"iPhone9,4" : @"iPhone 7 Plus",
+        @"iPhone10,1" : @"iPhone 8",
+        @"iPhone10,2" : @"iPhone 8 Plus",
+        @"iPhone10,3" : @"iPhone X",
+        @"iPhone10,4" : @"iPhone 8",
+        @"iPhone10,5" : @"iPhone 8 Plus",
+        @"iPhone10,6" : @"iPhone X",
+        @"iPhone11,2" : @"iPhone Xs",
+        @"iPhone11,4" : @"iPhone Xs Max",
+        @"iPhone11,6" : @"iPhone Xs Max",
+        @"iPhone11,8" : @"iPhone XR",
+        @"iPhone12,1" : @"iPhone 11",
+        @"iPhone12,3" : @"iPhone 11 Pro",
+        @"iPhone12,5" : @"iPhone 11 Pro Max",
+        
+        // 2. iPod 系列
+        @"iPod1,1" : @"iPod touch 1",
+        @"iPod2,1" : @"iPod touch 2",
+        @"iPod3,1" : @"iPod touch 3",
+        @"iPod4,1" : @"iPod touch 4",
+        @"iPod5,1" : @"iPod touch 5",
+        @"iPod7,1" : @"iPod touch 6",
+        @"iPod9,1" : @"iPod touch 7",
+
+        // 3. iPad 系列
+        // iPad
+        @"iPad1,1" : @"iPad 1",
+        @"iPad2,1" : @"iPad 2 (WiFi)",
+        @"iPad2,2" : @"iPad 2 (GSM)",
+        @"iPad2,3" : @"iPad 2 (CDMA)",
+        @"iPad2,4" : @"iPad 2",
+        @"iPad3,1" : @"iPad 3 (WiFi)",
+        @"iPad3,2" : @"iPad 3 (CDMA)",
+        @"iPad3,3" : @"iPad 3 (4G)",
+        @"iPad3,4" : @"iPad 4 (WiFi)",
+        @"iPad3,5" : @"iPad 4 (4G)",
+        @"iPad3,6" : @"iPad 4 (CDMA)",
+        @"iPad6,11" : @"iPad 5",
+        @"iPad6,12" : @"iPad 5",
+        @"iPad7,5" : @"iPad 6",
+        @"iPad7,6" : @"iPad 6",
+        @"iPad7,11" : @"iPad 7",
+        @"iPad7,12" : @"iPad 7",
+        // iPad Air
+        @"iPad4,1" : @"iPad Air",
+        @"iPad4,2" : @"iPad Air",
+        @"iPad4,3" : @"iPad Air",
+        @"iPad5,3" : @"iPad Air 2",
+        @"iPad5,4" : @"iPad Air 2",
+        @"iPad11,3" : @"iPad Air 3",
+        @"iPad11,4" : @"iPad Air 3",
+        // iPad Pro
+        @"iPad6,3" : @"iPad Pro (9.7-inch)",
+        @"iPad6,4" : @"iPad Pro (9.7-inch)",
+        @"iPad6,7" : @"iPad Pro (12.9-inch)",
+        @"iPad6,8" : @"iPad Pro (12.9-inch)",
+        @"iPad7,1" : @"iPad Pro 2 (12.9-inch)",
+        @"iPad7,2" : @"iPad Pro 2 (12.9-inch)",
+        @"iPad7,3" : @"iPad Pro (10.5-inch)",
+        @"iPad7,4" : @"iPad Pro (10.5-inch)",
+        @"iPad8,1" : @"iPad Pro (11-inch)",
+        @"iPad8,2" : @"iPad Pro (11-inch)",
+        @"iPad8,3" : @"iPad Pro (11-inch)",
+        @"iPad8,4" : @"iPad Pro (11-inch)",
+        @"iPad8,5" : @"iPad Pro 3 (12.9-inch)",
+        @"iPad8,6" : @"iPad Pro 3 (12.9-inch)",
+        @"iPad8,7" : @"iPad Pro 3 (12.9-inch)",
+        @"iPad8,8" : @"iPad Pro 3 (12.9-inch)",
+        // iPad mini
+        @"iPad2,5" : @"iPad mini 1 (WiFi)",
+        @"iPad2,6" : @"iPad mini 1 (GSM)",
+        @"iPad2,7" : @"iPad mini 1 (CDMA)",
+        @"iPad4,4" : @"iPad mini 2",
+        @"iPad4,5" : @"iPad mini 2",
+        @"iPad4,6" : @"iPad mini 2",
+        @"iPad4,7" : @"iPad mini 3",
+        @"iPad4,8" : @"iPad mini 3",
+        @"iPad4,9" : @"iPad mini 3",
+        @"iPad5,1" : @"iPad mini 4",
+        @"iPad5,2" : @"iPad mini 4",
+        @"iPad11,1" : @"iPad mini 5",
+        @"iPad11,2" : @"iPad mini 5",
+        
+        // 4. Apple Watch 系列
+        @"Watch1,1" : @"Apple Watch 38mm",
+        @"Watch1,2" : @"Apple Watch 42mm",
+        @"Watch2,3" : @"Apple Watch Series 2 38mm",
+        @"Watch2,4" : @"Apple Watch Series 2 42mm",
+        @"Watch2,6" : @"Apple Watch Series 1 38mm",
+        @"Watch2,7" : @"Apple Watch Series 1 42mm",
+        @"Watch3,1" : @"Apple Watch Series 3 38mm",
+        @"Watch3,2" : @"Apple Watch Series 3 42mm",
+        @"Watch3,3" : @"Apple Watch Series 3 38mm",
+        @"Watch3,4" : @"Apple Watch Series 3 42mm",
+        @"Watch4,1" : @"Apple Watch Series 4 40mm",
+        @"Watch4,2" : @"Apple Watch Series 4 44mm",
+        @"Watch4,3" : @"Apple Watch Series 4 40mm",
+        @"Watch4,4" : @"Apple Watch Series 4 44mm",
+        
+        // 5. Apple TV 系列
+        @"AppleTV2,1" : @"Apple TV 2",
+        @"AppleTV3,1" : @"Apple TV 3",
+        @"AppleTV3,2" : @"Apple TV 3",
+        @"AppleTV5,3" : @"Apple TV 4",
+        @"AppleTV6,2" : @"Apple TV 4K",
+        
+        // 6. AirPods 系列
+        @"AirPods1,1" : @"AirPods 1",
+        @"AirPods2,1" : @"AirPods 2",
+        @"iProd8,1"   : @"AirPods Pro",
+        
+        // 7. HomePod 系列
+        @"AudioAccessory1,1" : @"HomePod",
+        @"AudioAccessory1,2" : @"HomePod",
+        
+        // 8. Apple Pencil 系列 (暂时未知)
+//        @"Unknown" : @"Apple Pencil",
+//        @"Unknown" : @"Apple Pencil 2",
+        
+        // 9. Smart Keyboard 系列 (暂时未知)
+//        @"Unknown" : @"Smart Keyboard",
+//        @"Unknown" : @"Smart Keyboard Folio",
+        
+        // 10. Siri Remote 系列 (暂时未知)
+//        @"Unknown" : @"Siri Remote",
+//        @"Unknown" : @"Siri Remote 2",
+
+        // 模拟器
+        @"i386"   : @"Simulator x86",
+        @"x86_64" : @"Simulator x64",
+    };
+    NSString *name = dic[deviceModel];
+    if (!name) {
+        name = deviceModel;
     }
-    if ([deviceModel isEqualToString:@"iPhone2,1"]) {
-        return @"iPhone 3GS";
-    }
-    if ([deviceModel isEqualToString:@"iPhone3,1"] ||
-        [deviceModel isEqualToString:@"iPhone3,2"] ||
-        [deviceModel isEqualToString:@"iPhone3,3"]) {
-        return @"iPhone 4";
-    }
-    if ([deviceModel isEqualToString:@"iPhone4,1"]) {
-        return @"iPhone 4S";
-    }
-    if ([deviceModel isEqualToString:@"iPhone5,1"] ||
-        [deviceModel isEqualToString:@"iPhone5,2"]) {
-        return @"iPhone 5";
-    }
-    if ([deviceModel isEqualToString:@"iPhone5,3"] ||
-        [deviceModel isEqualToString:@"iPhone5,4"]) {
-        return @"iPhone 5C";
-    }
-    if ([deviceModel isEqualToString:@"iPhone6,1"] ||
-        [deviceModel isEqualToString:@"iPhone6,2"]) {
-        return @"iPhone 5S";
-    }
-    if ([deviceModel isEqualToString:@"iPhone7,1"]) {
-        return @"iPhone 6 Plus";
-    }
-    if ([deviceModel isEqualToString:@"iPhone7,2"]) {
-        return @"iPhone 6";
-    }
-    if ([deviceModel isEqualToString:@"iPhone8,1"]) {
-        return @"iPhone 6s";
-    }
-    if ([deviceModel isEqualToString:@"iPhone8,2"]) {
-        return @"iPhone 6s Plus";
-    }
-    if ([deviceModel isEqualToString:@"iPhone8,4"]) {
-        return @"iPhone SE";
-    }
-    if ([deviceModel isEqualToString:@"iPhone9,1"] ||
-        [deviceModel isEqualToString:@"iPhone9,3"]) {
-        return @"iPhone 7";
-    }
-    if ([deviceModel isEqualToString:@"iPhone9,2"] ||
-        [deviceModel isEqualToString:@"iPhone9,4"]) {
-        return @"iPhone 7 Plus";
-    }
-    if ([deviceModel isEqualToString:@"iPhone10,1"] ||
-        [deviceModel isEqualToString:@"iPhone10,4"]) {
-        return @"iPhone 8";
-    }
-    if ([deviceModel isEqualToString:@"iPhone10,2"] ||
-        [deviceModel isEqualToString:@"iPhone10,5"]) {
-        return @"iPhone 8 Plus";
-    }
-    if ([deviceModel isEqualToString:@"iPhone10,3"] ||
-        [deviceModel isEqualToString:@"iPhone10,6"]) {
-        return @"iPhone X";
-    }
-    if ([deviceModel isEqualToString:@"iPhone11,2"]) {
-        return @"iPhone Xs";
-    }
-    if ([deviceModel isEqualToString:@"iPhone11,4"] ||
-        [deviceModel isEqualToString:@"iPhone11,6"]) {
-        return @"iPhone Xs Max";
-    }
-    if ([deviceModel isEqualToString:@"iPhone11,8"]) {
-        return @"iPhone XR";
-    }
-    if ([deviceModel isEqualToString:@"iPhone12,1"]) {
-        return @"iPhone 11";
-    }
-    if ([deviceModel isEqualToString:@"iPhone12,3"]) {
-        return @"iPhone 11 Pro";
-    }
-    if ([deviceModel isEqualToString:@"iPhone12,5"]) {
-        return @"iPhone 11 Pro Max";
-    }
-    
-    // 2. iPod 系列
-    if ([deviceModel isEqualToString:@"iPod1,1"]) {
-        return @"iPod Touch";
-    }
-    if ([deviceModel isEqualToString:@"iPod2,1"]) {
-        return @"iPod Touch 2";
-    }
-    if ([deviceModel isEqualToString:@"iPod3,1"]) {
-        return @"iPod Touch 3";
-    }
-    if ([deviceModel isEqualToString:@"iPod4,1"]) {
-        return @"iPod Touch 4";
-    }
-    if ([deviceModel isEqualToString:@"iPod5,1"]) {
-        return @"iPod Touch 5";
-    }
-    if ([deviceModel isEqualToString:@"iPod7,1"]) {
-        return @"iPod Touch 6";
-    }
-    if ([deviceModel isEqualToString:@"iPod9,1"]) {
-        return @"iPod Touch 7";
-    }
-    
-    // 3. iPad 系列
-    if ([deviceModel isEqualToString:@"iPad1,1"]) {
-        return @"iPad";
-    }
-    if ([deviceModel isEqualToString:@"iPad2,1"]) {
-        return @"iPad 2 (WiFi)";
-    }
-    if ([deviceModel isEqualToString:@"iPad2,2"]) {
-        return @"iPad 2 (GSM)";
-    }
-    if ([deviceModel isEqualToString:@"iPad2,3"]) {
-        return @"iPad 2 (CDMA)";
-    }
-    if ([deviceModel isEqualToString:@"iPad2,4"]) {
-        return @"iPad 2 (32nm)";
-    }
-    if ([deviceModel isEqualToString:@"iPad3,1"]) {
-        return @"iPad 3(WiFi)";
-    }
-    if ([deviceModel isEqualToString:@"iPad3,2"]) {
-        return @"iPad 3(CDMA)";
-    }
-    if ([deviceModel isEqualToString:@"iPad3,3"]) {
-        return @"iPad 3(4G)";
-    }
-    if ([deviceModel isEqualToString:@"iPad3,4"]) {
-        return @"iPad 4 (WiFi)";
-    }
-    if ([deviceModel isEqualToString:@"iPad3,5"]) {
-        return @"iPad 4 (4G)";
-    }
-    if ([deviceModel isEqualToString:@"iPad3,6"]) {
-        return @"iPad 4 (CDMA)";
-    }
-    
-    if ([deviceModel isEqualToString:@"iPad4,1"] ||
-        [deviceModel isEqualToString:@"iPad4,2"] ||
-        [deviceModel isEqualToString:@"iPad4,3"]) {
-        return @"iPad Air";
-    }
-    if ([deviceModel isEqualToString:@"iPad5,3"] ||
-        [deviceModel isEqualToString:@"iPad5,4"]) {
-        return @"iPad Air 2";
-    }
-    if ([deviceModel isEqualToString:@"iPad11,3"] ||
-        [deviceModel isEqualToString:@"iPad11,4"]) {
-        return @"iPad Air 3";
-    }
-    
-    if ([deviceModel isEqualToString:@"iPad6,7"] ||
-        [deviceModel isEqualToString:@"iPad6,8"]) {
-        return @"iPad Pro (12.9-inch)";
-    }
-    if ([deviceModel isEqualToString:@"iPad6,3"] ||
-        [deviceModel isEqualToString:@"iPad6,4"]) {
-        return @"iPad Pro (9.7-inch)";
-    }
-    if ([deviceModel isEqualToString:@"iPad6,11"] ||
-        [deviceModel isEqualToString:@"iPad6,12"]) {
-        return @"iPad 5";
-    }
-    if ([deviceModel isEqualToString:@"iPad7,1"] ||
-        [deviceModel isEqualToString:@"iPad7,2"]) {
-        return @"iPad Pro 2 (12.9-inch)";
-    }
-    if ([deviceModel isEqualToString:@"iPad7,3"] ||
-        [deviceModel isEqualToString:@"iPad7,4"]) {
-        return @"iPad Pro (10.5-inch)";
-    }
-    if ([deviceModel isEqualToString:@"iPad7,5"] ||
-        [deviceModel isEqualToString:@"iPad7,6"]) {
-        return @"iPad 6";
-    }
-    if ([deviceModel isEqualToString:@"iPad8,1"] ||
-        [deviceModel isEqualToString:@"iPad8,2"] ||
-        [deviceModel isEqualToString:@"iPad8,3"] ||
-        [deviceModel isEqualToString:@"iPad8,4"]) {
-        return @"iPad Pro (11-inch)";
-    }
-    if ([deviceModel isEqualToString:@"iPad8,5"] ||
-        [deviceModel isEqualToString:@"iPad8,6"] ||
-        [deviceModel isEqualToString:@"iPad8,7"] ||
-        [deviceModel isEqualToString:@"iPad8,8"]) {
-        return @"iPad Pro 3 (12.9-inch)";
-    }
-    
-    // 4. iPad mini 系列
-    if ([deviceModel isEqualToString:@"iPad2,5"]) {
-        return @"iPad mini (WiFi)";
-    }
-    if ([deviceModel isEqualToString:@"iPad2,6"]) {
-        return @"iPad mini (GSM)";
-    }
-    if ([deviceModel isEqualToString:@"iPad2,7"]) {
-        return @"iPad mini (CDMA)";
-    }
-    if ([deviceModel isEqualToString:@"iPad4,4"] ||
-        [deviceModel isEqualToString:@"iPad4,5"] ||
-        [deviceModel isEqualToString:@"iPad4,6"]) {
-        return @"iPad mini 2";
-    }
-    if ([deviceModel isEqualToString:@"iPad4,7"] ||
-        [deviceModel isEqualToString:@"iPad4,8"] ||
-        [deviceModel isEqualToString:@"iPad4,9"]) {
-        return @"iPad mini 3";
-    }
-    if ([deviceModel isEqualToString:@"iPad5,1"] ||
-        [deviceModel isEqualToString:@"iPad5,2"]) {
-        return @"iPad mini 4";
-    }
-    if ([deviceModel isEqualToString:@"iPad11,1"] ||
-        [deviceModel isEqualToString:@"iPad11,2"]) {
-        return @"iPad mini 5";
-    }
-    
-    // 5. 模拟器
-    if ([deviceModel isEqualToString:@"i386"] ||
-        [deviceModel isEqualToString:@"x86_64"]) {
-        return @"Simulator";
-    }
-    
-    return deviceModel;
+    return name;
 }
 
 /**
