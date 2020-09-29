@@ -141,6 +141,8 @@
         @"iPad7,6" : @"iPad 6",
         @"iPad7,11" : @"iPad 7",
         @"iPad7,12" : @"iPad 7",
+        @"iPad11,6" : @"iPad 8",
+        @"iPad11,7" : @"iPad 8",
         // iPad Air
         @"iPad4,1" : @"iPad Air",
         @"iPad4,2" : @"iPad Air",
@@ -149,6 +151,8 @@
         @"iPad5,4" : @"iPad Air 2",
         @"iPad11,3" : @"iPad Air 3",
         @"iPad11,4" : @"iPad Air 3",
+        @"iPad13,1" : @"iPad Air 4",
+        @"iPad13,2" : @"iPad Air 4",
         // iPad Pro
         @"iPad6,3" : @"iPad Pro (9.7-inch)",
         @"iPad6,4" : @"iPad Pro (9.7-inch)",
@@ -166,6 +170,8 @@
         @"iPad8,6" : @"iPad Pro 3 (12.9-inch)",
         @"iPad8,7" : @"iPad Pro 3 (12.9-inch)",
         @"iPad8,8" : @"iPad Pro 3 (12.9-inch)",
+        @"iPad8,11" : @"iPad Pro 4 (12.9-inch)",
+        @"iPad8,12" : @"iPad Pro 4 (12.9-inch)",
         // iPad mini
         @"iPad2,5" : @"iPad mini 1 (WiFi)",
         @"iPad2,6" : @"iPad mini 1 (GSM)",
@@ -196,6 +202,18 @@
         @"Watch4,2" : @"Apple Watch Series 4 44mm",
         @"Watch4,3" : @"Apple Watch Series 4 40mm",
         @"Watch4,4" : @"Apple Watch Series 4 44mm",
+        @"Watch5,1" : @"Apple Watch Series 5 40mm",
+        @"Watch5,2" : @"Apple Watch Series 5 44mm",
+        @"Watch5,3" : @"Apple Watch Series 5 40mm",
+        @"Watch5,4" : @"Apple Watch Series 5 44mm",
+        @"Watch5,9"  : @"Apple Watch SE 40mm",
+        @"Watch5,10" : @"Apple Watch SE 44mm",
+        @"Watch5,11" : @"Apple Watch SE 40mm",
+        @"Watch5,12" : @"Apple Watch SE 44mm",
+        @"Watch6,1" : @"Apple Watch Series 6 40mm",
+        @"Watch6,2" : @"Apple Watch Series 6 44mm",
+        @"Watch6,3" : @"Apple Watch Series 6 40mm",
+        @"Watch6,4" : @"Apple Watch Series 6 44mm",
         
         // 5. Apple TV 系列
         @"AppleTV2,1" : @"Apple TV 2",
