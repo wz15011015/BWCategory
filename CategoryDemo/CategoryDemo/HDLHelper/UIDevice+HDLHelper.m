@@ -112,6 +112,11 @@
         @"iPhone12,1" : @"iPhone 11",
         @"iPhone12,3" : @"iPhone 11 Pro",
         @"iPhone12,5" : @"iPhone 11 Pro Max",
+        @"iPhone12,8" : @"iPhone SE 2",
+        @"iPhone13,1" : @"iPhone 12 mini",
+        @"iPhone13,2" : @"iPhone 12",
+        @"iPhone13,3" : @"iPhone 12 Pro",
+        @"iPhone13,4" : @"iPhone 12 Pro Max",
         
         // 2. iPod 系列
         @"iPod1,1" : @"iPod touch 1",
