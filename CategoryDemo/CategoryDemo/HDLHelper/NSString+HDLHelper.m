@@ -291,8 +291,8 @@
  */
 - (BOOL)isEmailAddress {
     NSString *regex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-    NSPredicate *assert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    return [assert evaluateWithObject:self];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [predicate evaluateWithObject:self];
 }
 
 /**
@@ -301,57 +301,108 @@
  */
 - (BOOL)isPhoneNumber {
     /**
-     * 手机号码
-     * 移动：134[0-8],135,136,137,138,139,150,151,157,158,159,182,187,188
-     * 联通：130,131,132,152,155,156,185,186
-     * 电信：133,1349,153,180,189
+     * 手机号码号段分配情况:
+     *
+     * 移动：134~139,144(物联网),147,148(物联网),150~152,157~159,165,1703,1705,1706,172(物联网),178,182~184,
+     *      187,188,195,197,198,1440
+     *
+     * 联通：130,131,132,140(物联网),145,146(物联网),155,156,166,167,175,176,185,186,196,1704,
+     *      1707~1719
+     *
+     * 电信：133,141(物联网),149(物联网),153,162,1700~1702,173,1740,177,180,181,189,190~193,199,1349
+     *
+     * 广电：192,
+     *
      */
-    NSString *mobileRegex = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
     
     /**
      * 中国移动：China Mobile
-     * 134[0-8],135,136,137,138,139,150,151,157,158,159,182,187,188
      */
-    NSString *cmobileRegex = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
+    NSArray *cmobileNums = @[
+        @"134", @"135", @"136", @"137", @"138", @"139",
+        @"144", @"1440", @"147", @"148",
+        @"150", @"151", @"152", @"157", @"158", @"159",
+        @"165",
+        @"1703", @"1705", @"1706", @"172", @"178",
+        @"182", @"183", @"184", @"187", @"188",
+        @"195", @"197", @"198"
+    ];
     
     /**
      * 中国联通：China Unicom
-     * 130,131,132,152,155,156,185,186
      */
-    NSString *cunicomRegex = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
+    NSArray *cunicomNums = @[
+        @"130", @"131", @"132",
+        @"140", @"145", @"146",
+        @"155", @"156",
+        @"166", @"167",
+        @"1704", @"1707", @"1708", @"1709", @"1710", @"1711", @"1712", @"1713", @"1714",
+        @"1715", @"1716", @"1717", @"1718", @"1719", @"175", @"176",
+        @"185", @"186",
+        @"196"
+    ];
     
     /**
      * 中国电信：China Telecom
-     * 133,1349,153,180,189
      */
-    NSString *ctelecomRegex = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
+    NSArray *ctelecomNums = @[
+        @"133", @"1349",
+        @"141", @"149",
+        @"153",
+        @"162",
+        @"1700", @"1701", @"1702", @"173", @"1740", @"177",
+        @"180", @"181", @"189",
+        @"190", @"191", @"193", @"199"
+    ];
+    
+    /**
+     * 中国广电：China Broadcast Network
+     */
+    NSArray *cbnNums = @[
+        @"192"
+    ];
     
     /**
      * 大陆地区固话及小灵通
      * 区号：010,020,021,022,023,024,025,027,028,029
      * 号码：七位或八位
      */
-    NSString *chandRegex = @"^0(10|2[0-5789]|\\d{3})\\d{7,8}$";
+    NSArray *chandNums = @[
+        @"010", @"020", @"021", @"022", @"023", @"024", @"025", @"027", @"028", @"029"
+    ];
     
-    NSPredicate *mobileAssert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", mobileRegex];
-    NSPredicate *cmobileAssert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", cmobileRegex];
-    NSPredicate *cunicomAssert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", cunicomRegex];
-    NSPredicate *ctelecomAssert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", ctelecomRegex];
-    NSPredicate *chandAssert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", chandRegex];
     
-    return ([mobileAssert evaluateWithObject:self] ||
-            [chandAssert evaluateWithObject:self] ||
-            [cmobileAssert evaluateWithObject:self] ||
-            [cunicomAssert evaluateWithObject:self] ||
-            [ctelecomAssert evaluateWithObject:self]
-            );
-}
+    // 正则表达式示例: ^(134|135|136)\\d{8}$
+    // 正则表达式示例: ^(1703|1705|1706)\\d{7}$
+    NSString *regex1 = @"^(";
+    NSString *regex2 = @"^(";
+    NSMutableArray *nums = [NSMutableArray array];
+    [nums addObjectsFromArray:cmobileNums];
+    [nums addObjectsFromArray:cunicomNums];
+    [nums addObjectsFromArray:ctelecomNums];
+    [nums addObjectsFromArray:cbnNums];
+    [nums addObjectsFromArray:chandNums];
+    for (NSString *num in nums) {
+        if ([num isEqualToString:nums.lastObject]) {
+            if (num.length == 3) {
+                regex1 = [regex1 stringByAppendingString:num];
+            } else if (num.length == 4) {
+                regex2 = [regex2 stringByAppendingString:num];
+            }
+        } else {
+            if (num.length == 3) {
+                regex1 = [regex1 stringByAppendingFormat:@"%@|", num];
+            } else if (num.length == 4) {
+                regex2 = [regex2 stringByAppendingFormat:@"%@|", num];
+            }
+        }
+    }
+    regex1 = [regex1 stringByAppendingFormat:@")\\d{8}$"];
+    regex2 = [regex2 stringByAppendingFormat:@")\\d{7}$"];
 
-- (BOOL)isPhoneNumber2 {
-    // 手机号以13、15、18开头，八个数字字符
-    NSString *regex = @"^((13[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$";
-    NSPredicate *assert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    return [assert evaluateWithObject:self];
+    NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex1];
+    NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex2];
+    return ([predicate1 evaluateWithObject:self] || [predicate2 evaluateWithObject:self]);
 }
 
 /**
@@ -359,8 +410,8 @@
  */
 - (BOOL)isCarNumber {
     NSString *regex = @"^[\u4e00-\u9fa5]{1}[a-zA-Z]{1}[a-zA-Z_0-9]{4}[a-zA-Z_0-9_\u4e00-\u9fa5]$";
-    NSPredicate *assert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    return [assert evaluateWithObject:self];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [predicate evaluateWithObject:self];
 }
 
 /**
@@ -368,8 +419,8 @@
  */
 - (BOOL)isCarType {
     NSString *regex = @"^[\u4E00-\u9FFF]+$";
-    NSPredicate *assert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    return [assert evaluateWithObject:self];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [predicate evaluateWithObject:self];
 }
 
 /**
@@ -378,8 +429,8 @@
  */
 - (BOOL)isIdentityNumber {
     NSString *regex = @"^(\\d{14}|\\d{17})(\\d|[xX])$";
-    NSPredicate *assert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    return [assert evaluateWithObject:self];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [predicate evaluateWithObject:self];
 }
 
 /**
@@ -390,14 +441,14 @@
  */
 - (BOOL)isPassword {
     NSString *regex = @"^[a-zA-Z0-9]{6,12}+$";
-    NSPredicate *assert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    return [assert evaluateWithObject:self];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [predicate evaluateWithObject:self];
 }
 
 - (BOOL)isPasswordWithMin:(unsigned int)min max:(unsigned int)max {
     NSString *regex = [NSString stringWithFormat:@"^[a-zA-Z0-9]{%u,%u}+$", min, max];
-    NSPredicate *assert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    return [assert evaluateWithObject:self];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [predicate evaluateWithObject:self];
 }
 
 /**
@@ -405,27 +456,9 @@
  * 密码规则: 至少8位字符，且必须要包含大写字母、小写字母和数字.
  */
 - (BOOL)isValidPwd {
-//    if (self.length < 8) {
-//        return NO;
-//    }
-//
-//    BOOL isLower = NO, isUpper = NO, isNum = NO;
-//    for (int k = 0; k < self.length; k++) {
-//        char tmp = [self characterAtIndex:k];
-//        if (tmp <= 'z' && tmp >= 'a') {
-//            isLower = YES;
-//        } else if (tmp <= 'Z' && tmp >= 'A') {
-//            isUpper = YES;
-//        } else if (tmp <= '9' && tmp >= '0') {
-//            isNum = YES;
-//        }
-//    }
-//
-//    return isLower && isUpper && isNum;
-    
     NSString *regex = @"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$";
-    NSPredicate *assert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    return [assert evaluateWithObject:self];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [predicate evaluateWithObject:self];
 }
 
 /**
@@ -444,14 +477,14 @@
  */
 - (BOOL)isPureNumber {
     NSString *regex = @"^[0-9]{5}$";
-    NSPredicate *assert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    return [assert evaluateWithObject:self];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [predicate evaluateWithObject:self];
 }
 
 - (BOOL)isPureNumberWithSize:(unsigned int)size {
     NSString *regex = [NSString stringWithFormat:@"^[0-9]{%d}$", size];
-    NSPredicate *assert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    return [assert evaluateWithObject:self];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [predicate evaluateWithObject:self];
 }
 
 /**
@@ -462,23 +495,23 @@
  */
 - (BOOL)isNickname {
     NSString *regex = @"^[\u4e00-\u9fa5]{4,8}$";
-    NSPredicate *assert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    return [assert evaluateWithObject:self];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [predicate evaluateWithObject:self];
 }
 
 - (BOOL)isNicknameWithMin:(unsigned int)min max:(unsigned int)max {
     NSString *regex = [NSString stringWithFormat:@"^[\u4e00-\u9fa5]{%u,%u}$", min, max];
-    NSPredicate *assert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    return [assert evaluateWithObject:self];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [predicate evaluateWithObject:self];
 }
 
 /**
- * 验证年龄
+ * 验证年龄 (范围: 1岁 ~ 149岁)
  */
 - (BOOL)isAge {
     NSString *regex = @"([1-9]|[1-9][0-9]|1[0-4][0-9])";
-    NSPredicate *assert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    return [assert evaluateWithObject:self];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [predicate evaluateWithObject:self];
 }
 
 /**
@@ -489,8 +522,8 @@
  */
 - (BOOL)isValidDeviceSocketName {
     NSString *regex = [NSString stringWithFormat:@"[^ /]+"];
-    NSPredicate *assert = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    return [assert evaluateWithObject:self];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [predicate evaluateWithObject:self];
 }
 
 @end

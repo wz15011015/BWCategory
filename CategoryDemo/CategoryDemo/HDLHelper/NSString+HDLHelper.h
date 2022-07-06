@@ -145,7 +145,6 @@ NS_ASSUME_NONNULL_BEGIN
  * 说明: 适用于中国内地的手机号
  */
 - (BOOL)isPhoneNumber;
-- (BOOL)isPhoneNumber2;
 
 /**
  * 车牌号验证
@@ -201,7 +200,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isNicknameWithMin:(unsigned int)min max:(unsigned int)max;
 
 /**
- * 验证年龄
+ * 验证年龄 (范围: 1岁 ~ 149岁)
  */
 - (BOOL)isAge;
 

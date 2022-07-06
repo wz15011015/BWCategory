@@ -32,7 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		061A014722D41A0900F77542 /* NSStringViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSStringViewController.h; path = ../NSStringViewController.h; sourceTree = "<group>"; };
+		0607F1EF287579080026896E /* NSStringViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringViewController.h; sourceTree = "<group>"; };
 		061A014822D41A0900F77542 /* NSStringViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSStringViewController.m; sourceTree = "<group>"; };
 		061A014A22D42B4F00F77542 /* UIImage+HDLHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+HDLHelper.h"; sourceTree = "<group>"; };
 		061A014B22D42B4F00F77542 /* UIImage+HDLHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+HDLHelper.m"; sourceTree = "<group>"; };
@@ -129,7 +129,7 @@
 				066B1CEF22D3183000505311 /* UIDeviceViewController.m */,
 				06868D7B22D31E00009D6BE5 /* NSBundleViewController.h */,
 				06868D7C22D31E00009D6BE5 /* NSBundleViewController.m */,
-				061A014722D41A0900F77542 /* NSStringViewController.h */,
+				0607F1EF287579080026896E /* NSStringViewController.h */,
 				061A014822D41A0900F77542 /* NSStringViewController.m */,
 				06448E9522D6C694000D8680 /* UIImageViewController.h */,
 				06448E9622D6C694000D8680 /* UIImageViewController.m */,
